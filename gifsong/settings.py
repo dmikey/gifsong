@@ -10,6 +10,20 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import sys
+
+# Debugging and deployment things.
+# Add NOTHEROKU='true' to your environment vars
+LOCALDEV = False
+HEROKU = True
+try:
+    if(os.environ['NOTHEROKU']):
+        LOCALDEV = True
+        HEROKU = False
+except:
+    pass
+TEMPLATE_DEBUG = DEBUG = LOCALDEV
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -80,3 +94,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+if(HEROKU):
+    # Parse database configuration from $DATABASE_URL
+    if(DEBUG != True):
+        import dj_database_url
+        DATABASES['default'] =  dj_database_url.config()
+        # Allow all host headers
+        ALLOWED_HOSTS = ['*']
+    
+    # Honor the 'X-Forwarded-Proto' header for request.is_secure()
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+    # Static asset configuration
+    import os
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    STATIC_ROOT = 'sweeterp/static/'
+    STATIC_URL = '/static/'
+    
+    STATICFILES_DIRS = (
+           os.path.join(BASE_DIR, 'staticfiles'),
+    )
