@@ -1,0 +1,23 @@
+
+
+<html>
+<head>
+    <title>gifsong</title>
+</head>
+<body>
+        <a href="/show">random gifsong</a>
+        <h3>Make GifSong</h3>
+        <form method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input class="btn btn-primary btn-large" type="submit" value="Submit" />
+        </form>
+    <p>
+    add songs with urls like www.youtube.com/embed/zpmKjJ4YU_c?autoplay=1
+    </p>
+    <p>
+    add images with urls like i.imgur.com/SVwaAwZ.gif
+    </p>
+     
+
+</body>
+</html>

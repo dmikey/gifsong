@@ -27,6 +27,16 @@ TEMPLATE_DEBUG = DEBUG = LOCALDEV
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+# Absolute paths for where the project and templates are stored.
+ABSOLUTE_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+RELATIVE_PROJECT_ROOT = os.path.abspath(os.path.join(ABSOLUTE_PROJECT_ROOT, '../'))
+ABSOLUTE_TEMPLATES_PATH = os.path.abspath(os.path.join(ABSOLUTE_PROJECT_ROOT, 'templates/'))
+ABSOLUTE_STATICFILES_PATH = os.path.abspath(os.path.join(ABSOLUTE_PROJECT_ROOT, 'staticfiles/'))
+ABSOLUTE_SWEETALERTS_TEMPLATES_PATH = os.path.abspath(os.path.join(RELATIVE_PROJECT_ROOT, 'templates/'))
+
+TEMPLATE_DIRS = (
+    ABSOLUTE_TEMPLATES_PATH,
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -51,6 +61,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'gifsong',
 )
 
 MIDDLEWARE_CLASSES = (
