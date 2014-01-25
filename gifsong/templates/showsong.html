@@ -2,6 +2,11 @@
 {% block override_block %}
     {% include "includes/sharebar.html" %}
 {% endblock %}
+
+{% block css_override_block %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/showsong.css">
+{% endblock %}
+
 {% block container %}
 <style>
     html { 
@@ -10,23 +15,6 @@
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
-    }
-    
-    body {
-        margin:0px;
-    }
-    
-    #sharebar {
-        position: absolute;
-        width: 100%;
-        height: 20px;
-        background-color: #fff;
-        opacity: .5;
-    }
-    
-    #sharebar a {
-        color: #000;
-        font-weight: bold;
     }
 </style>
 <iframe id="youtube" style="display:none;" width="420" height="315" src="http://{{ song.audio_url }}" frameborder="0" allowfullscreen></iframe>

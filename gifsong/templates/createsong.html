@@ -1,10 +1,10 @@
 {% extends "base.html" %}
+
+{% block css_override_block %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/createsong.css">
+{% endblock %}
+
 {% block container %}
-<style>
-        body {
-            text-align:center;  
-        }
-    </style>
     <a href="/show">view random song</a>
     <h1>Gif Song</h1>
     <p>create a new gif song</p>
@@ -13,10 +13,9 @@
     <input class="yui3-button success" type="submit" value="Submit" />
     </form>
     <p>
-    add songs with urls like www.youtube.com/embed/zpmKjJ4YU_c?autoplay=1
+        add songs with urls like www.youtube.com/embed/zpmKjJ4YU_c?autoplay=1
     </p>
     <p>
-    add images with urls like i.imgur.com/SVwaAwZ.gif
+        add images with urls like i.imgur.com/SVwaAwZ.gif
     </p>
-
 {% endblock %}
