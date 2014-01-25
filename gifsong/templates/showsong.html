@@ -1,11 +1,8 @@
 {% extends "base.html" %}
-
 {% block override_block %}
     {% include "includes/sharebar.html" %}
 {% endblock %}
-
 {% block container %}
-
 <style>
     html { 
         background: url(http://{{ song.image_url }}) no-repeat center center fixed; 
@@ -32,7 +29,5 @@
         font-weight: bold;
     }
 </style>
-
 <iframe id="youtube" style="display:none;" width="420" height="315" src="http://{{ song.audio_url }}" frameborder="0" allowfullscreen></iframe>
-
 {% endblock %}

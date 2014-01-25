@@ -1,6 +1,36 @@
 <html>
 <head>
     <title>gifsong</title>
+    <link href='http://fonts.googleapis.com/css?family=Duru+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.14.1/build/cssbutton/cssbutton.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: 'Duru Sans', sans-serif;
+        }
+        input[type="text"] {
+            width: 300px;
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10px;
+            clear:both;
+            display:block;
+        
+            border: 2px solid white; 
+            -webkit-box-shadow: 
+              inset 0 0 8px  rgba(0,0,0,0.1),
+                    0 0 16px rgba(0,0,0,0.1); 
+            -moz-box-shadow: 
+              inset 0 0 8px  rgba(0,0,0,0.1),
+                    0 0 16px rgba(0,0,0,0.1); 
+            box-shadow: 
+              inset 0 0 8px  rgba(0,0,0,0.1),
+                    0 0 16px rgba(0,0,0,0.1); 
+            padding: 15px;
+            background: rgba(255,255,255,0.5);
+        }
+    </style>
 </head>
 <body>
    {% block override_block %}{% endblock %}
