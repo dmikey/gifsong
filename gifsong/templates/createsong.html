@@ -10,12 +10,50 @@
     <p>create a new gif song</p>
     <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input class="yui3-button success" type="submit" value="Submit" />
-    </form>
+    <p>
+        preview before creating
+    </p>
     <p>
         add songs with urls like www.youtube.com/embed/zpmKjJ4YU_c?autoplay=1
     </p>
     <p>
         add images with urls like i.imgur.com/SVwaAwZ.gif
     </p>
+        
+    <input id="submitgifvid" class="yui3-button success" type="submit" value="Create" />
+    </form>
+
+    <script>
+    $(function(){
+        $("#id_image_url").after(
+            $("<div/>", {
+                "id" : "checkImage",
+                "src" : $("#id_image_url").val(),
+                "class" : "yui3-button fa fa-eye notice marginTop",
+                "text" : " preview"
+            })
+        );
+        $("#id_audio_url").after(
+            $("<div/>", {
+                "id" : "checkImage",
+                "src" : $("#id_image_url").val(),
+                "class" : "yui3-button fa fa-volume-up notice marginTop",
+                "text" : " preview"
+            })
+        );
+        
+        $("#checkImage").click(function(){
+            $("#previewImage").remove();
+            $("#id_image_url").before(
+                
+                $("<img/>", {
+                    "id" : "previewImage",
+                    "class" : "previewImage",
+                    "src" : "http://" + $("#id_image_url").val()
+                })
+            );
+        });
+
+    });
+    </script>
 {% endblock %}
