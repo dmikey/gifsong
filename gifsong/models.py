@@ -5,5 +5,5 @@ class gifsong(models.Model):
     audio_url = models.CharField(max_length=255)
     
     def create(cls, image_url, audio_url):
-        alert = cls()
-        return alert
+        gifsong = cls()
+        return gifsong
