@@ -28,3 +28,23 @@ input[type="text"] {
     background-color: #57A957;
     color: white;
 }
+
+.notice {
+    background-color: #1B7AE0;
+    color: white;
+}
+
+#submitgifvid {
+    font-size: 1.3em;   
+}
+
+.marginTop {
+    margin-top:5px;   
+}
+
+.previewImage {
+    display: block;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
