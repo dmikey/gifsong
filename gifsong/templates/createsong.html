@@ -1,30 +1,64 @@
 {% extends "base.html" %}
 
 {% block css_override_block %}
+    <script src="{{ STATIC_URL }}js/jquery.steps.min.js"></script>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.steps.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/createsong.css">
 {% endblock %}
 
 {% block container %}
-    <a href="/show">view random song</a>
+
+<a href="/show">view random song</a>
     <h1>Gif Song</h1>
-    <p>create a new gif song</p>
-    <p>
-        add songs with urls like www.youtube.com/embed/zpmKjJ4YU_c?autoplay=1
-    </p>
-    <p>
-        add images with urls like i.imgur.com/SVwaAwZ.gif
-    </p>
-    <form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <p>
-        preview before creating
-    </p>
-    <input id="submitgifvid" class="yui3-button success" type="submit" value="Create" />
-    </form>
-<iframe id="youtube" style="display:none;" width="420" height="315" src="http://{{ song.audio_url }}" frameborder="0" allowfullscreen></iframe>
+<form action="/" method="post">
+    {{ form.non_field_errors }}
+    {% csrf_token %}
+
+
+
+
+<div id="wizard">
+                <h2>Image</h2>
+                <section>
+                    <div class="fieldWrapper">
+                        {{ form.image_url.errors }}
+                        <label for="id_subject">URL to Image</label>
+                        {{ form.image_url }}
+                    </div>
+                    <p>
+                        add images with urls like i.imgur.com/SVwaAwZ.gif
+                    </p>
+                </section>
+
+                <h2>Song</h2>
+                <section>
+                    <div class="fieldWrapper">
+                        {{ form.audio_url.errors }}
+                        <label for="id_message">URL to Audio</label>
+                        {{ form.audio_url }}
+                    </div>
+                    <p>
+                        add songs with urls like www.youtube.com/embed/zpmKjJ4YU_c?autoplay=1
+                    </p>
+                </section>
+    
+                <h2>Create</h2>
+                <section>
+   <input id="submitgifvid" class="yui3-button success" type="submit" value="Create" />
+   
+                </section>
+            </div>
+</form>
 
     <script>
     $(function(){
+        $("#wizard").steps({
+            headerTag: "h2",
+            bodyTag: "section",
+            transitionEffect: "slideLeft",
+            height:"300"
+        });
+        
         $("#id_image_url").after(
             $("<div/>", {
                 "id" : "checkImage",
@@ -68,4 +102,7 @@
 
     });
     </script>
+<div class="footer">
+Copyright &copy; 2014 Nintendoges
+</div>
 {% endblock %}
