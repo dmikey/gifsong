@@ -1,7 +1,18 @@
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
 <div id="sharebar">&nbsp;
     <a id="permaLink" data-show="" class="yui3-button fa fa-link" href="#"> perma link</a>
-    <input id="permaLinkText" class="displayNone" value="http://www.gifsong.me/show?gvid={{song.id}}"></input>
+    <input id="permaLinkText" class="displayNone" value="http://www.gifsong.me/show?gvid={{song.id}}"/>
     <a class="yui3-button fa fa-plus-square" href="/"> create</a>
     <a class="yui3-button fa fa-random"  href="/show"> random</a>
     <a id="hideplayerButton" class="yui3-button fa fa-eye-slash"> Show Audio Player</a>
+    <div class="fb-share-button" data-href="http://www.gifsong.me/show/?gvid={{song.id}}" data-type="button"></div>
 </div>
