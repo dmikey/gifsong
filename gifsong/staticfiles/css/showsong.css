@@ -1,7 +1,9 @@
 body {
     margin:0px;
 }
-
+html{
+    overflow: hidden;
+}
 #sharebar {
     position: absolute;
     width: 100%;

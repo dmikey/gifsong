@@ -6,3 +6,27 @@ body {
     min-height: 20em;
     height: auto;
 }
+
+.circular {
+width: 100px;
+height: 150px;
+border-radius: 150px;
+-webkit-border-radius: 150px;
+-moz-border-radius: 150px;
+float: left;
+margin-left: auto;
+margin-right: auto;
+display: inline-block;
+}
+.derek{background: url(https://1.gravatar.com/avatar/6ec3b0315afea890a868f0e006e00acc?d=https%3A%2F%2Fidenticons.github.com%2Fd4e32f23214faf2aa7a8d107dc8b8992.png&r=x&s=440) no-repeat;background-size: cover;}
+.derick{background: url(https://0.gravatar.com/avatar/ac306e6b269742449badda2b4b473439?d=https%3A%2F%2Fidenticons.github.com%2F30fbe0775cd0ce8b6d4529a5a7c1a7cc.png&r=x&s=440) no-repeat;background-size: cover;}
+.burns{background: url(https://1.gravatar.com/avatar/b9f98c356a23f83f7a80b56d4d575e58?d=https%3A%2F%2Fidenticons.github.com%2F124000c72c8269e99983f22ea321912c.png&r=x&s=440) no-repeat;background-size: cover;}
+.mannyu{background: url(https://2.gravatar.com/avatar/89fd74aee664b2a09da7d3cd2a8b5f66?d=https%3A%2F%2Fidenticons.github.com%2F812a24795d4eb0fe3f72abba995f2eb4.png&r=x&s=400) no-repeat;background-size: cover;}
+.justin{background: url(https://2.gravatar.com/avatar/321492ebcf7d831c99243830690bfaa7?d=https%3A%2F%2Fidenticons.github.com%2Fbd13fad90d198d6a9a88c8f229645dc8.png&r=x&s=440) no-repeat;background-size: cover;}
+.matt{background: url(https://2.gravatar.com/avatar/c0b1a6d757b97f41e8d99946e747f76d?d=https%3A%2F%2Fidenticons.github.com%2F0360401270d43703cd7d6295dba28ca9.png&r=x&s=440) no-repeat;background-size: cover;}
+
+.doges {
+    margin-left:auto;
+    margin-right:auto;
+    width: 50%;
+}
