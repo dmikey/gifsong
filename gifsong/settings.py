@@ -28,7 +28,7 @@ TEMPLATE_DIRS = (
     ABSOLUTE_TEMPLATES_PATH,
 )
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# SECURITY WARNING: secret key is streamed into evar see heroku section below
 SECRET_KEY = 'b-g(rm-rwiz^szsv!i+=_8eiq^)oc5*s$=lx@f8575am-672n_'
 
 ALLOWED_HOSTS = []
