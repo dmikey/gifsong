@@ -18,7 +18,7 @@
         display:none !important;   
     }
 </style>
-<iframe id="youtube" src="http://{{ song.audio_url }}" frameborder="0" allowfullscreen></iframe>
+<iframe id="youtube" class="displayNone" src="http://{{ song.audio_url }}" frameborder="0" allowfullscreen></iframe>
 <script>
 $(function(){
     $("#hideplayerButton").click(function(){
@@ -35,7 +35,7 @@ $(function(){
            $("#sharebar").removeClass();
         $("#githubLink").removeClass();
         
-             var inout = "fade" + (($(this).text().indexOf("Hide") > -1 ) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1 ) ? "Up" : "Down") ;
+             var inout = "fade" + (($(this).text().indexOf("Hide") > -1 ) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1 ) ? "Down" : "Up") ;
             i = setTimeout('$("#sharebar").removeClass();$("#sharebar").addClass("animated '+ inout +'");$("#githubLink").removeClass();$("#githubLink").addClass("animated '+ inout +'");', 2000);
     });
 });
