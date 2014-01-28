@@ -1,3 +1,4 @@
+{% load googleanalytics_tags %}
 <html>
 <head>
     <title>gifsong</title>
@@ -18,5 +19,6 @@
    {% block override_block %}{% endblock %}
    {% include "includes/github.html" %}
    {% block container %}{% endblock %}
+   {% googleanalytics %}
 </body>
 </html>
