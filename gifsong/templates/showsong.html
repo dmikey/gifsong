@@ -4,25 +4,33 @@
 {% endblock %}
 {% block css_override_block %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/showsong.css">
+
+    <!-- open graph tags -->
+    <meta property="og:image" content="http://{{ song.image_url }}"/>
+    <meta property="og:title" content="An Animated Jam"/>
+    <meta property="og:url" content="http://www.gifsong.me/show?gvid={{song.id}}"/>
+    <meta property="og:site_name" content="GifSong.ME"/>
+    <meta property="og:type" content="gifsong:gifsong"/>
+
 {% endblock %}
 {% block container %}
 <style>
-    html { 
-        background: url(http://{{ song.image_url }}) no-repeat center center fixed; 
+    html {
+        background: url(http://{{ song.image_url }}) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
     }
     .displayNone {
-        display:none !important;   
+        display:none !important;
     }
 </style>
 <iframe id="youtube" class="displayNone" src="http://{{ song.audio_url }}" frameborder="0" allowfullscreen></iframe>
 <script>
 $(function(){
     var i = setTimeout('$("#sharebar").removeClass();$("#sharebar").addClass("animated fadeOutDown");$("#githubLink").removeClass();$("#githubLink").addClass("animated fadeOutUp");', 2000);
-    
+
     $("#permaLink").click(function(e) {
         var inout = "fade" + (($(this).attr("data-show").indexOf("Hide") > -1 ) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1 ) ? "Down" : "Up") ;
          $('#permaLinkText').removeClass();
@@ -43,12 +51,12 @@ $(function(){
             return (($(this).text().indexOf("Hide") > -1 ) ? " Show" : " Hide") + " Audio Player";
         });
     });
-    
+
     $("html").mousemove(function(){
             clearTimeout(i);
            $("#sharebar").removeClass();
         $("#githubLink").removeClass();
-        
+
              var inout = "fade" + (($(this).text().indexOf("Hide") > -1 ) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1 ) ? "Down" : "Up") ;
             i = setTimeout('$("#sharebar").removeClass();$("#sharebar").addClass("animated '+ inout +'");$("#githubLink").removeClass();$("#githubLink").addClass("animated '+ inout +'");', 2000);
     });
