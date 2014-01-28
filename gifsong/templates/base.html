@@ -9,6 +9,7 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
     <!-- js -->
+    {% googleanalytics %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <!-- gifsong -->
     <link rel="stylesheet" href="{{ STATIC_URL }}css/main.css">
@@ -19,6 +20,5 @@
    {% block override_block %}{% endblock %}
    {% include "includes/github.html" %}
    {% block container %}{% endblock %}
-   {% googleanalytics %}
 </body>
 </html>
