@@ -17,3 +17,12 @@ body {
     color: #000;
     font-weight: bold;
 }
+
+#permaLinkText {
+    color: #fff;
+    margin-left: 3px;
+    margin-right: 3px;
+    border: 0px;
+    background: transparent;
+    width: 250px;
+}
