@@ -5,6 +5,23 @@ a django gif song masheruper. like ytmnd, gifsound, but called gifsong, and open
 
 see it in action http://www.gifsong.me
 
+
+Run Locally
+===========
+requires python 2.7, foreman, virtualenv
+
+###create virtual environment, install requirements, syncDB and start server
+
+make
+
+###run server
+
+make runserver
+
+
+License
+=======
+
 The MIT License (MIT)
 
 Copyright (c) 2014 Nintendoges
