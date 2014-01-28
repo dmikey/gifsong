@@ -115,11 +115,14 @@ if(HEROKU):
     DATABASES['default'] =  dj_database_url.config()
     # Allow all host headers
     ALLOWED_HOSTS = ['*']
-    
-    if(os.environ['DJANGO_SECRET']):
-        # Secret Key
-        SECRET_KEY = os.environ['DJANGO_SECRET']
-    
+
+    try:
+        if(os.environ['DJANGO_SECRET']):
+            # Secret Key
+            SECRET_KEY = os.environ['DJANGO_SECRET']
+    except:
+        pass
+
     # Honor the 'X-Forwarded-Proto' header for request.is_secure()
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -128,7 +131,7 @@ if(HEROKU):
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     STATIC_ROOT = 'static/'
     STATIC_URL = 'https://googledrive.com/host/0B30fK9bxmUN5QnRlN0VpVEgyYUk/'
-    
+
     STATICFILES_DIRS = (
            os.path.join(BASE_DIR, 'staticfiles'),
     )
