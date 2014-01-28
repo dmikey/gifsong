@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from django.shortcuts import redirect
 from django.forms import ModelForm
 
+
 from gifsong.models import gifsong
 
 class GifSongForm(ModelForm):
@@ -23,8 +24,8 @@ class showgifsong(TemplateView):
         if (agifsong == None):
             if(gifsong.objects.order_by('?')):
                 agifsong = gifsong.objects.order_by('?')[0]
-            
-            
+                return redirect('/show?gvid=' + str(agifsong.id))
+        
         context = {
             'song' : agifsong,
         }
