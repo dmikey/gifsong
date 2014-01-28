@@ -67,3 +67,11 @@ input[type="text"] {
 #sharebar .fb-share-button{
     float: right;
 }
+
+#rating {
+    width: 50px;
+    opacity: .45;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}

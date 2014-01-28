@@ -26,10 +26,19 @@
         display:none !important;
     }
 </style>
+<img id="rating" src="{{ STATIC_URL }}/img/rating_everyone.png"/>
 <iframe id="youtube" class="displayNone" src="http://{{ song.audio_url }}" frameborder="0" allowfullscreen></iframe>
 <script>
 $(function(){
-    var i = setTimeout('$("#sharebar").removeClass();$("#sharebar").addClass("animated fadeOutDown");$("#githubLink").removeClass();$("#githubLink").addClass("animated fadeOutUp");', 2000);
+    var swfness = "{{ song.sfwness }}";
+    if(swfness == "2") {
+        $("#rating").attr('src',"{{ STATIC_URL }}/img/rating_mature.png");
+    }
+    if(swfness == "3") {
+        $("#rating").attr('src',"{{ STATIC_URL }}/img/rating_pg.png");
+    }
+
+    var i = setTimeout('$("#sharebar").removeClass();$("#sharebar").addClass("animated fadeOutDown");$("#githubLink").removeClass();$("#githubLink").addClass("animated fadeOutUp");$("#rating").removeClass();$("#rating").addClass("animated fadeOutUp");', 2000);
 
     $("#permaLink").click(function(e) {
         var inout = "fade" + (($(this).attr("data-show").indexOf("Hide") > -1 ) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1 ) ? "Down" : "Up") ;
@@ -56,9 +65,11 @@ $(function(){
             clearTimeout(i);
            $("#sharebar").removeClass();
         $("#githubLink").removeClass();
+         $("#rating").removeClass();
 
              var inout = "fade" + (($(this).text().indexOf("Hide") > -1 ) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1 ) ? "Down" : "Up") ;
-            i = setTimeout('$("#sharebar").removeClass();$("#sharebar").addClass("animated '+ inout +'");$("#githubLink").removeClass();$("#githubLink").addClass("animated '+ inout +'");', 2000);
+        var inoutOther = "fade" + (($(this).text().indexOf("Hide") > -1 ) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1 ) ? "Up" : "Down") ;
+            i = setTimeout('$("#sharebar").removeClass();$("#sharebar").addClass("animated '+ inout +'");$("#githubLink").removeClass();$("#githubLink").addClass("animated '+ inoutOther +'");$("#rating").removeClass();$("#rating").addClass("animated '+ inoutOther +'");', 2000);
     });
 });
 </script>

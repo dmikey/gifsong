@@ -16,15 +16,19 @@ class showgifsong(TemplateView):
 
     def get(self, request, *args, **kwargs):
         gvidid = request.GET.get('gvid')
+        nsfw = request.GET.get('nsfw')
         agifsong = None
 
         if(gvidid):
             agifsong = gifsong.objects.get(id=gvidid)
 
         if (agifsong == None):
-            sfw = gifsong.objects.all().filter(Q(sfwness=1) | Q(sfwness=3)).order_by('?')
-            if(sfw):
-                agifsong = sfw[0]
+            if(nsfw == None):
+                sfw = gifsong.objects.all().filter(Q(sfwness=1) | Q(sfwness=3)).order_by('?')
+                if(sfw):
+                    agifsong = sfw[0]
+            if(nsfw):
+                agifsong = gifsong.objects.order_by('?')[0]
 
         context = {
             'song' : agifsong,
