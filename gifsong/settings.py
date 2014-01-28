@@ -116,6 +116,10 @@ if(HEROKU):
     # Allow all host headers
     ALLOWED_HOSTS = ['*']
     
+    if(os.environ['DJANGO_SECRET']):
+        # Secret Key
+        SECRET_KEY = os.environ['DJANGO_SECRET']
+    
     # Honor the 'X-Forwarded-Proto' header for request.is_secure()
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
