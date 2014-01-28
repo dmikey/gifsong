@@ -4,9 +4,13 @@ runserver: manage.py
 	. gifsong/bin/activate && \
 	foreman start
 
-runaftersetup: reqs
+runaftersetup: syncdb
 	. gifsong/bin/activate && \
 	foreman start
+
+syncdb: reqs
+	. gifsong/bin/activate && \
+	python manage.py syncdb
 
 reqs: cmod
 	. gifsong/bin/activate && \
