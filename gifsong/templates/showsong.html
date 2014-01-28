@@ -21,7 +21,7 @@
 <iframe id="youtube" class="displayNone" src="http://{{ song.audio_url }}" frameborder="0" allowfullscreen></iframe>
 <script>
 $(function(){
-    $("#permaLink").click(function() {
+    $("#permaLink").click(function(e) {
         var inout = "fade" + (($(this).attr("data-show").indexOf("Hide") > -1 ) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1 ) ? "Down" : "Up") ;
          $('#permaLinkText').removeClass();
          $("#permaLinkText").addClass('animated ' + inout);
@@ -31,6 +31,7 @@ $(function(){
          $(this).attr("data-show", function(){
             return (($(this).attr("data-show").indexOf("Hide") > -1 ) ? "Show" : "Hide");
         })
+        e.preventDefault();
     });
     $("#hideplayerButton").click(function(){
         var inout = "fade" + (($(this).text().indexOf("Hide") > -1 ) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1 ) ? "Down" : "Up") ;
