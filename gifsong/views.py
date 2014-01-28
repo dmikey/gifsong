@@ -24,7 +24,6 @@ class showgifsong(TemplateView):
         if (agifsong == None):
             if(gifsong.objects.order_by('?')):
                 agifsong = gifsong.objects.order_by('?')[0]
-                return redirect('/show?gvid=' + str(agifsong.id))
         
         context = {
             'song' : agifsong,
