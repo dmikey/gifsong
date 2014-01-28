@@ -3,13 +3,14 @@ import os
 import sys
 
 # Debugging and deployment things.
-# Add NOTHEROKU='true' to your environment vars
-LOCALDEV = False
-HEROKU = True
+# Add ONHEROKU='true' to your environment vars
+LOCALDEV = True
+HEROKU = False
+
 try:
-    if(os.environ['NOTHEROKU']):
-        LOCALDEV = True
-        HEROKU = False
+    if(os.environ['ONHEROKU']):
+        LOCALDEV = False
+        HEROKU = True
 except:
     pass
 
