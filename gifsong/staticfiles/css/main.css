@@ -1,69 +1,77 @@
 body {
-    font-family: 'Duru Sans', sans-serif;
+  font-family: 'Duru Sans', sans-serif;
 }
-input[type="text"] {
-    width: 300px;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    clear:both;
-    display:block;
 
-    border: 2px solid white;
-    -webkit-box-shadow:
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1);
-    -moz-box-shadow:
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1);
-    box-shadow:
-      inset 0 0 8px  rgba(0,0,0,0.1),
-            0 0 16px rgba(0,0,0,0.1);
-    padding: 15px;
-    background: rgba(255,255,255,0.5);
+input[type="text"] {
+  width: 300px;
+  position: relative;
+  margin: 10px auto 0;
+  clear: both;
+  display: block;
+  padding: 15px;
+  background: rgba(255,255,255,0.5);
+  border: 2px solid white;
+
+  -webkit-box-shadow:
+    inset 0 0 8px  rgba(0,0,0,0.1),
+          0 0 16px rgba(0,0,0,0.1);
+  -moz-box-shadow:
+    inset 0 0 8px  rgba(0,0,0,0.1),
+          0 0 16px rgba(0,0,0,0.1);
+  box-shadow:
+    inset 0 0 8px  rgba(0,0,0,0.1),
+          0 0 16px rgba(0,0,0,0.1);
 }
 
 .success {
-    background-color: #57A957;
-    color: white;
+  background-color: #57A957;
+  color: white;
 }
 
 .notice {
-    background-color: #1B7AE0;
-    color: white;
+  background-color: #1B7AE0;
+  color: white;
 }
 
 #submitgifvid {
-    font-size: 1.3em;
+  font-size: 1.3em;
 }
 
 .marginTop {
-    margin-top:5px;
+  margin-top:5px;
 }
 
 .previewImage {
-    display: block;
-    width: 200px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.clearfix {
-    clear:both;
+  display: block;
+  width: 200px;
+  margin: 0 auto;
 }
 
 #youtube {
-    display: block;
-    height: 200px;
-    width: 200px;
-    position: absolute;
-    right: 0;
-    bottom: 2em;
-    opacity: .7;
-    z-index: 999999;
+  display: block;
+  height: 200px;
+  width: 200px;
+  position: absolute;
+  right: 0;
+  bottom: 2em;
+  opacity: .7;
+  z-index: 999999;
 }
 
-#sharebar .fb-share-button{
-    float: right;
+#sharebar .fb-share-button {
+  float: right;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: " "; /* 1 */
+  display: table; /* 2 */
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  *zoom: 1;
 }
