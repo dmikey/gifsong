@@ -26,7 +26,7 @@
                         {{ form.image_url }}
                     </div>
                     <p>
-                        add images with urls like i.imgur.com/SVwaAwZ.gif
+                        currently limited to imgur.com
                     </p>
                 </section>
 
@@ -52,6 +52,7 @@
 
     <script>
     $(function(){
+        $("#id_image_url").attr("placeholder","http://imgur.com/SVwaAwZ");
         $("#wizard").steps({
             headerTag: "h2",
             bodyTag: "section",
@@ -68,13 +69,36 @@
             })
         );
         $("#checkImage").click(function(){
+
+            //check imgur stuffs
+            var image_url = $("#id_image_url").val();
+            if (!/^https?:\/\//i.test(image_url)) {
+                image_url = 'http://' + image_url;
+            }
+            if(image_url.indexOf("imgur") > -1 && /^https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:gif)$/.test(image_url) != true){
+                if(image_url.lastIndexOf("/") == (image_url.length - 1)){
+                    //remove trailing slash
+                    image_url = image_url.substring(0, (image_url.lastIndexOf("/")))
+                };
+                image_url = image_url.substring(image_url.lastIndexOf("/") + 1);
+                image_url = "i.imgur.com/" + image_url + ".gif";
+            }
+
+            //ensure it is an image
+            if(/^https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:gif)$/.test(image_url)){
+                //gif image is in string with proper url, strip for inserting into db
+                image_url = image_url.replace("http://","");
+                image_url = image_url.replace("https://","");
+            }
+
+
             $("#previewImage").remove();
             $("#id_image_url").before(
 
                 $("<img/>", {
                     "id" : "previewImage",
                     "class" : "previewImage",
-                    "src" : "http://" + $("#id_image_url").val()
+                    "src" : "http://" + image_url
                 })
             );
         });

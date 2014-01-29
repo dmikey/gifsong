@@ -56,9 +56,11 @@ $(function(){
             clearTimeout(i);
            $("#sharebar").removeClass();
         $("#githubLink").removeClass();
+         $("#rating").removeClass();
 
              var inout = "fade" + (($(this).text().indexOf("Hide") > -1 ) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1 ) ? "Down" : "Up") ;
-            i = setTimeout('$("#sharebar").removeClass();$("#sharebar").addClass("animated '+ inout +'");$("#githubLink").removeClass();$("#githubLink").addClass("animated '+ inout +'");', 2000);
+        var inoutOther = "fade" + (($(this).text().indexOf("Hide") > -1 ) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1 ) ? "Up" : "Down") ;
+            i = setTimeout('$("#sharebar").removeClass();$("#sharebar").addClass("animated '+ inout +'");$("#githubLink").removeClass();$("#githubLink").addClass("animated '+ inoutOther +'");', 2000);
     });
 });
 </script>

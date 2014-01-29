@@ -18,6 +18,14 @@ TEMPLATE_DEBUG = DEBUG = LOCALDEV
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+# Analytics
+try:
+    GOOGLE_ANALYTICS_ACCOUNT_CODE = os.environ['GAID']
+except:
+    pass
+
+
+
 # Absolute paths for where the project and templates are stored.
 ABSOLUTE_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 RELATIVE_PROJECT_ROOT = os.path.abspath(os.path.join(ABSOLUTE_PROJECT_ROOT, '../'))
@@ -43,6 +51,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'google_analytics',
 
     'gifsong',
 

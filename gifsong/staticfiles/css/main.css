@@ -45,6 +45,7 @@ input[type="text"] {
   display: block;
   width: 200px;
   margin: 0 auto;
+  max-height: 150px;
 }
 
 #youtube {
@@ -60,6 +61,14 @@ input[type="text"] {
 
 #sharebar .fb-share-button {
   float: right;
+}
+
+#rating {
+  width: 50px;
+  opacity: .45;
+  position: absolute;
+  left: 5px;
+  top: 5px;
 }
 
 .clearfix:before,
