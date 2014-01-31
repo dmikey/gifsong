@@ -2,6 +2,7 @@
 
 {% block css_override_block %}
     <script src="{{ STATIC_URL }}js/jquery.steps.min.js"></script>
+    <script src="{{ STATIC_URL }}js/SwfObject.js"></script>
     <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.steps.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/createsong.css">
 {% endblock %}
@@ -26,28 +27,34 @@
                     </div>
                 </section>
 
-                <h2>Song Url</h2>
+                <h2>Youtube Url</h2>
                 <section>
                     <div class="fieldWrapper">
                         {{ form.audio_url.errors }}
                         {{ form.audio_url }}
                     </div>
-                    <p>
-                        add songs with urls like www.youtube.com/embed/zpmKjJ4YU_c?autoplay=1
-                    </p>
                 </section>
 
                 <h2>Create</h2>
                 <section>
-   <input id="submitgifvid" class="yui3-button success" type="submit" value="Create" />
+                    <input id="submitgifvid" class="yui3-button success" type="submit" value="Create" />
 
                 </section>
             </div>
 </form>
-
+<div id="previewSong"></div>
     <script>
+     // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var previewSong;
     $(function(){
         $("#id_image_url").attr("placeholder","http://i.imgur.com/WJBkMZ1.gif");
+        $("#id_audio_url").attr("placeholder","http://youtu.be/6M5SflJgsQ0");
 
         $("#id_image_url").change(function(){
              alert('error');
@@ -70,7 +77,7 @@
                 if(currentIndex == 0){
                     $("<img>", {
                         src: $("#id_image_url").val(),
-                        error: function() { $('li.first').addClass('error'); },
+                        error: function() { $('li.first').addClass('error');  $("#submitgifvid").attr("disabled", "disabled");},
                         load: function() {
                                 console.log('loafef');
                                 $('li.first').removeClass('error');
@@ -79,11 +86,39 @@
                                 $("html").css('-moz-background-size', 'cover');
                                 $("html").css('-o-background-size', 'cover');
                                 $("html").css('background-size:', 'cover');
+                                $("#submitgifvid").removeAttr("disabled");
                         },
                     });
                 }
 
                 if(currentIndex == 1){
+
+                    var tubeid = getTubeId($("#id_audio_url").val());
+
+
+
+                      // 3. This function creates an <iframe> (and YouTube player)
+                      //    after the API code downloads.
+
+                        previewSong = new YT.Player('previewSong', {
+                          height: '200',
+                          width: '200',
+                          videoId: tubeid,
+                          playerVars: { 'autoplay': 1},
+                          events: {
+                            'onReady': function(event){console.log('ready', event)},
+                            'onStateChange': function(){},
+                            'onError': function(event){
+                                console.log('error', event)
+                             }
+                          }
+                        });
+
+
+
+
+
+
 
                 }
 
@@ -92,6 +127,16 @@
             },
         });
 
+        function getTubeId(url){
+                var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                var match = url.match(regExp);
+                if (match&&match[2].length==11){
+                    console.log(match[2]);
+                    return match[2];
+                }else{
+                    return false;
+                }
+        }
 
 
 
@@ -105,7 +150,7 @@
         );
         $("#checkSong").click(function(){
             $("#previewSong").remove();
-            $("#id_audio_url").before(
+            $("body").append(
                 $("<iframe/>", {
                     "id" : "previewSong",
                     "class" : "previewImage",
@@ -164,6 +209,14 @@ opacity: .7;
 }
 #id_image_url:-ms-input-placeholder { /* Internet Explorer 10+ */
     color:    #000;
+}
+
+
+#previewSong{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+        display:block;
 }
 </style>
 <div class="footer">
