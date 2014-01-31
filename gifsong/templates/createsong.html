@@ -95,8 +95,16 @@
 
                     var tubeid = getTubeId($("#id_audio_url").val());
 
+if(!tubeid){
+    return false;
+}
+                    $("#previewSong").remove();
+                    $("body").append(
+                    $('<div></div>', {id:"previewSong"})
 
+                    );
 
+                     $("#previewSong").css('display', 'none');
                       // 3. This function creates an <iframe> (and YouTube player)
                       //    after the API code downloads.
 
@@ -104,19 +112,31 @@
                           height: '200',
                           width: '200',
                           videoId: tubeid,
-                          playerVars: { 'autoplay': 1},
+                          playerVars: { 'autoplay': 1 },
                           events: {
-                            'onReady': function(event){console.log('ready', event)},
+                            'onReady': function(event){console.log('ready', event);
+                                    if (previewSong.getDuration() <= 0){
+                                        //error
+                                         $('ul li:eq(1)').addClass('error');
+                                         $("#submitgifvid").attr("disabled", "disabled");
+                                         $("#previewSong").remove();
+                                    } else{
+                                        $("#submitgifvid").removeAttr("disabled");
+                                        $("#previewSong").css('display', 'block');
+                                    }
+
+                        console.log(previewSong.getDuration());
+
+
+
+
+                                                      },
                             'onStateChange': function(){},
                             'onError': function(event){
                                 console.log('error', event)
                              }
                           }
                         });
-
-
-
-
 
 
 
@@ -140,25 +160,6 @@
 
 
 
-        $("#id_audio_url").after(
-            $("<div/>", {
-                "id" : "checkSong",
-                "src" : $("#id_image_url").val(),
-                "class" : "yui3-button fa fa-volume-up notice marginTop",
-                "text" : " preview"
-            })
-        );
-        $("#checkSong").click(function(){
-            $("#previewSong").remove();
-            $("body").append(
-                $("<iframe/>", {
-                    "id" : "previewSong",
-                    "class" : "previewImage",
-                    "frameborder": "0",
-                    "src" : "http://" + $("#id_audio_url").val()
-                })
-            );
-        });
 
 
     });
@@ -198,7 +199,7 @@
 float: left;
 opacity: .7;
 }
-    #id_image_url::-webkit-input-placeholder { /* WebKit browsers */
+    #id_audio_url::-webkit-input-placeholder, #id_image_url::-webkit-input-placeholder { /* WebKit browsers */
     color:    #000;
 }
 #id_image_url:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
