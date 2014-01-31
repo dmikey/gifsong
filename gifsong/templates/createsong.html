@@ -95,9 +95,8 @@
 
                     var tubeid = getTubeId($("#id_audio_url").val());
 
-if(!tubeid){
-    return false;
-}
+
+
                     $("#previewSong").remove();
                     $("body").append(
                     $('<div></div>', {id:"previewSong"})
@@ -178,13 +177,6 @@ if(!tubeid){
     font-size: 0.8em;
 }
 
-    html {
-        background: url(http://i.imgur.com/WJBkMZ1.gif) no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
 
 #sharebar a {
     color: #000;
