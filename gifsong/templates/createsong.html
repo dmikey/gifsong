@@ -187,21 +187,21 @@
         background-color:transparent;
     }
 
-    .wizard > .steps > ul > li, .wizard > .actions > ul > li {
+.wizard > .steps > ul > li, .wizard > .actions > ul > li {
 float: left;
 opacity: .7;
 }
     #id_audio_url::-webkit-input-placeholder, #id_image_url::-webkit-input-placeholder { /* WebKit browsers */
-    color:    #000;
+    color:    #333;
 }
 #id_image_url:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color:    #000;
+    color:    #333;
 }
 #id_image_url::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color:    #000;
+    color:    #333;
 }
 #id_image_url:-ms-input-placeholder { /* Internet Explorer 10+ */
-    color:    #000;
+    color:    #333;
 }
 
 
@@ -211,6 +211,19 @@ opacity: .7;
     left: 0;
         display:block;
 }
+
+.wizard, .tabcontrol {
+    display: block;
+    width: 65%;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer {
+        position:absolute;
+        bottom:0;
+    }
 </style>
 <div class="footer">
     <div class="copyright">Brought to you by these Doges.</div>

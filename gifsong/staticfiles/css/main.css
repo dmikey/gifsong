@@ -34,7 +34,10 @@ input[type="text"] {
 }
 
 #submitgifvid {
-  font-size: 1.3em;
+    font-size: 1.3em;
+    position: absolute;
+    bottom: 20%;
+    right: 20%;
 }
 
 .marginTop {
