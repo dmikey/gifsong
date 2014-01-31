@@ -75,13 +75,20 @@
             enableFinishButton: false,
             onStepChanging: function (event, currentIndex, newIndex) {
                 if(currentIndex == 0){
+                    var previewFix = "http://";
+                    if ($("#id_image_url").val().indexOf("http://")==0 || $("#id_image_url").val().indexOf("https://")==0) {
+                        var val = $("#id_image_url").val().replace("http://","");
+                        val = val.replace("https://","");
+                        $("#id_image_url").val(val);
+                        console.log(val);
+                    }
                     $("<img>", {
-                        src: $("#id_image_url").val(),
+                        src: previewFix + $("#id_image_url").val(),
                         error: function() { $('li.first').addClass('error');  $("#submitgifvid").attr("disabled", "disabled");},
                         load: function() {
                                 console.log('loafef');
                                 $('li.first').removeClass('error');
-                                $("html").css('background','url(' +$("#id_image_url").val() +') no-repeat center center fixed');
+                                $("html").css('background','url(' + previewFix + $("#id_image_url").val() +') no-repeat center center fixed');
                                 $("html").css('-webkit-background-size', 'cover');
                                 $("html").css('-moz-background-size', 'cover');
                                 $("html").css('-o-background-size', 'cover');
