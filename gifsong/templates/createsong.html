@@ -6,35 +6,30 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/createsong.css">
 {% endblock %}
 
-{% block container %}
+{% block override_block %}
+    <div id="sharebar">&nbsp;
+        <a class="yui3-button fa fa-home"me  href="/"> GIFSong</a>
+        <a class="yui3-button fa fa-random"  href="/show"> random</a>
+    </div>
+{% endblock %}
 
-<a href="/show">view random song</a>
-    <h1>Gif Song</h1>
+{% block container %}
 <form action="/" method="post">
     {{ form.non_field_errors }}
     {% csrf_token %}
-
-
-
-
 <div id="wizard">
-                <h2>Image</h2>
+                <h2>GIF Url</h2>
                 <section>
                     <div class="fieldWrapper">
                         {{ form.image_url.errors }}
-                        <label for="id_subject">URL to Image</label>
                         {{ form.image_url }}
                     </div>
-                    <p>
-                        currently limited to imgur.com
-                    </p>
                 </section>
 
-                <h2>Song</h2>
+                <h2>Song Url</h2>
                 <section>
                     <div class="fieldWrapper">
                         {{ form.audio_url.errors }}
-                        <label for="id_message">URL to Audio</label>
                         {{ form.audio_url }}
                     </div>
                     <p>
@@ -52,56 +47,41 @@
 
     <script>
     $(function(){
-        $("#id_image_url").attr("placeholder","http://imgur.com/SVwaAwZ");
+        $("#id_image_url").attr("placeholder","http://i.imgur.com/WJBkMZ1.gif");
+
         $("#wizard").steps({
             headerTag: "h2",
             bodyTag: "section",
             transitionEffect: "slideLeft",
-            height:"300"
+            height:"200",
+            enableFinishButton: false,
+            onStepChanging: function (event, currentIndex, newIndex) {
+                if(currentIndex == 0){
+                       var imageLoaded = true;
+                       $("#previewImage").remove();
+                       $("<img/>", {
+                            "id" : "previewImage",
+                            "class" : "previewImage",
+                            "src" : $("#id_image_url").val(),
+                            load : function(){
+                                   $("html").css("background", "url(" + $("#id_image_url").val() + ") no-repeat center center fixed");
+                                   $("html").css("-webkit-background-size", "cover");
+                                   $("html").css("-moz-background-size","cover");
+                                   $("html").css("-o-background-size","cover");
+                                   $("html").css("background-size","cover");
+                                   imageLoaded = true;
+                            },
+                           error: function() { imageLoaded = false; },
+                        });
+                    return imageLoaded;
+                }
+
+                return true;
+            },
         });
 
-        $("#id_image_url").after(
-            $("<div/>", {
-                "id" : "checkImage",
-                "src" : $("#id_image_url").val(),
-                "class" : "yui3-button fa fa-eye notice marginTop",
-                "text" : " preview"
-            })
-        );
-        $("#checkImage").click(function(){
-
-            //check imgur stuffs
-            var image_url = $("#id_image_url").val();
-            if (!/^https?:\/\//i.test(image_url)) {
-                image_url = 'http://' + image_url;
-            }
-            if(image_url.indexOf("imgur") > -1 && /^https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:gif)$/.test(image_url) != true){
-                if(image_url.lastIndexOf("/") == (image_url.length - 1)){
-                    //remove trailing slash
-                    image_url = image_url.substring(0, (image_url.lastIndexOf("/")))
-                };
-                image_url = image_url.substring(image_url.lastIndexOf("/") + 1);
-                image_url = "i.imgur.com/" + image_url + ".gif";
-            }
-
-            //ensure it is an image
-            if(/^https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:gif)$/.test(image_url)){
-                //gif image is in string with proper url, strip for inserting into db
-                image_url = image_url.replace("http://","");
-                image_url = image_url.replace("https://","");
-            }
 
 
-            $("#previewImage").remove();
-            $("#id_image_url").before(
-
-                $("<img/>", {
-                    "id" : "previewImage",
-                    "class" : "previewImage",
-                    "src" : "http://" + image_url
-                })
-            );
-        });
 
         $("#id_audio_url").after(
             $("<div/>", {
@@ -126,6 +106,54 @@
 
     });
     </script>
+<style>
+    body{
+        margin:0;
+    }
+    #sharebar {
+    position: relative;
+    width: 100%;
+    height: 2.5em;
+    background-color: transparent;
+    padding-top: 5px;
+        text-align:left;
+    font-size: 0.8em;
+}
+
+    html {
+        background: url(http://i.imgur.com/WJBkMZ1.gif) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+
+#sharebar a {
+    color: #000;
+    font-weight: bold;
+}
+
+.wizard > .content {
+        background-color:transparent;
+    }
+
+    .wizard > .steps > ul > li, .wizard > .actions > ul > li {
+float: left;
+opacity: .7;
+}
+    #id_image_url::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #000;
+}
+#id_image_url:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #000;
+}
+#id_image_url::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #000;
+}
+#id_image_url:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #000;
+}
+</style>
 <div class="footer">
     <div class="copyright">Brought to you by these Doges.</div>
     <div class="doges clearfix">

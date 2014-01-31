@@ -3,13 +3,14 @@ body {
 }
 
 .wizard > .content {
-  min-height: 20em;
+  min-height: 10em;
   height: auto;
 }
 
 .footer {
-  width: 60%;
-  margin: 0 auto;
+    width: 100%;
+    background: #fff;
+    opacity: .5;
 }
 
 .circular {
