@@ -49,6 +49,17 @@
     $(function(){
         $("#id_image_url").attr("placeholder","http://i.imgur.com/WJBkMZ1.gif");
 
+        $("#id_image_url").change(function(){
+             alert('error');
+            $("<img>", {
+                    src: $("#id_image_url").val(),
+                    error: function() { alert('error'); },
+                    load: function() { },
+            });
+         });
+
+        var imageError = false;
+
         $("#wizard").steps({
             headerTag: "h2",
             bodyTag: "section",
@@ -57,24 +68,25 @@
             enableFinishButton: false,
             onStepChanging: function (event, currentIndex, newIndex) {
                 if(currentIndex == 0){
-                       var imageLoaded = true;
-                       $("#previewImage").remove();
-                       $("<img/>", {
-                            "id" : "previewImage",
-                            "class" : "previewImage",
-                            "src" : $("#id_image_url").val(),
-                            load : function(){
-                                   $("html").css("background", "url(" + $("#id_image_url").val() + ") no-repeat center center fixed");
-                                   $("html").css("-webkit-background-size", "cover");
-                                   $("html").css("-moz-background-size","cover");
-                                   $("html").css("-o-background-size","cover");
-                                   $("html").css("background-size","cover");
-                                   imageLoaded = true;
-                            },
-                           error: function() { imageLoaded = false; },
-                        });
-                    return imageLoaded;
+                    $("<img>", {
+                        src: $("#id_image_url").val(),
+                        error: function() { $('li.first').addClass('error'); },
+                        load: function() {
+                                console.log('loafef');
+                                $('li.first').removeClass('error');
+                                $("html").css('background','url(' +$("#id_image_url").val() +') no-repeat center center fixed');
+                                $("html").css('-webkit-background-size', 'cover');
+                                $("html").css('-moz-background-size', 'cover');
+                                $("html").css('-o-background-size', 'cover');
+                                $("html").css('background-size:', 'cover');
+                        },
+                    });
                 }
+
+                if(currentIndex == 1){
+
+                }
+
 
                 return true;
             },
