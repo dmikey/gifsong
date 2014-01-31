@@ -4,7 +4,7 @@
 {% endblock %}
 {% block css_override_block %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/showsong.css">
-
+    <script src="https://www.youtube.com/iframe_api"></script>
     <!-- open graph tags -->
     <meta property="og:image" content="http://{{ song.image_url }}"/>
     <meta property="og:title" content="An Animated Jam"/>
@@ -26,41 +26,80 @@
         display:none !important;
     }
 </style>
-<iframe id="youtube" class="displayNone" src="http://{{ song.audio_url }}" frameborder="0" allowfullscreen></iframe>
+
+<div id="youtube" class="displayNone"></div>
 <script>
-$(function(){
+
+//this code is duped, whateve, get it out of here if this is a money maker, rigggght
+var youtube;
+function getTubeId(url) {
+    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    if (match && match[2].length == 11) {
+        console.log(match[2]);
+        return match[2];
+    } else {
+        return false;
+    }
+}
+
+// 2. This code loads the IFrame Player API code asynchronously.
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+function onYouTubeIframeAPIReady() {
+    var tubeid = getTubeId("{{ song.audio_url }}");
+    console.log(tubeid);
+    youtube = new YT.Player('youtube', {
+        height: '200',
+        width: '200',
+        videoId: tubeid,
+        playerVars: {
+            'autoplay': 1
+        },
+        events: {
+            'onReady': function (event) {},
+            'onStateChange': function () {},
+            'onError': function (event) {}
+        }
+    });
+}
+
+$(function () {
     var i = setTimeout('$("#sharebar").removeClass();$("#sharebar").addClass("animated fadeOutDown");$("#githubLink").removeClass();$("#githubLink").addClass("animated fadeOutUp");', 2000);
 
-    $("#permaLink").click(function(e) {
-        var inout = "fade" + (($(this).attr("data-show").indexOf("Hide") > -1 ) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1 ) ? "Down" : "Up") ;
-         $('#permaLinkText').removeClass();
-         $("#permaLinkText").addClass('animated ' + inout);
-         if(inout.indexOf("Out") > -1){
+    $("#permaLink").click(function (e) {
+        var inout = "fade" + (($(this).attr("data-show").indexOf("Hide") > -1) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1) ? "Down" : "Up");
+        $('#permaLinkText').removeClass();
+        $("#permaLinkText").addClass('animated ' + inout);
+        if (inout.indexOf("Out") > -1) {
             $("#permaLinkText").addClass('displayNone');
-         }
-         $(this).attr("data-show", function(){
-            return (($(this).attr("data-show").indexOf("Hide") > -1 ) ? "Show" : "Hide");
+        }
+        $(this).attr("data-show", function () {
+            return (($(this).attr("data-show").indexOf("Hide") > -1) ? "Show" : "Hide");
         })
         e.preventDefault();
     });
-    $("#hideplayerButton").click(function(){
-        var inout = "fade" + (($(this).text().indexOf("Hide") > -1 ) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1 ) ? "Down" : "Up") ;
+    $("#hideplayerButton").click(function () {
+        var inout = "fade" + (($(this).text().indexOf("Hide") > -1) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1) ? "Down" : "Up");
         $('#youtube').removeClass();
         $('#youtube').addClass('animated ' + inout);
-        $(this).text(function(){
-            return (($(this).text().indexOf("Hide") > -1 ) ? " Show" : " Hide") + " Audio Player";
+        $(this).text(function () {
+            return (($(this).text().indexOf("Hide") > -1) ? " Show" : " Hide") + " Audio Player";
         });
     });
 
-    $("html").mousemove(function(){
-            clearTimeout(i);
-           $("#sharebar").removeClass();
+    $("html").mousemove(function () {
+        clearTimeout(i);
+        $("#sharebar").removeClass();
         $("#githubLink").removeClass();
-         $("#rating").removeClass();
+        $("#rating").removeClass();
 
-             var inout = "fade" + (($(this).text().indexOf("Hide") > -1 ) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1 ) ? "Down" : "Up") ;
-        var inoutOther = "fade" + (($(this).text().indexOf("Hide") > -1 ) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1 ) ? "Up" : "Down") ;
-            i = setTimeout('$("#sharebar").removeClass();$("#sharebar").addClass("animated '+ inout +'");$("#githubLink").removeClass();$("#githubLink").addClass("animated '+ inoutOther +'");', 2000);
+        var inout = "fade" + (($(this).text().indexOf("Hide") > -1) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1) ? "Down" : "Up");
+        var inoutOther = "fade" + (($(this).text().indexOf("Hide") > -1) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1) ? "Up" : "Down");
+        i = setTimeout('$("#sharebar").removeClass();$("#sharebar").addClass("animated ' + inout + '");$("#githubLink").removeClass();$("#githubLink").addClass("animated ' + inoutOther + '");', 2000);
     });
 });
 </script>
