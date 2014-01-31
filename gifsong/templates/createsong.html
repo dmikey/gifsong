@@ -2,130 +2,231 @@
 
 {% block css_override_block %}
     <script src="{{ STATIC_URL }}js/jquery.steps.min.js"></script>
+    <script src="{{ STATIC_URL }}js/SwfObject.js"></script>
     <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.steps.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/createsong.css">
 {% endblock %}
 
-{% block container %}
+{% block override_block %}
+    <div id="sharebar">&nbsp;
+        <a class="yui3-button fa fa-home"me  href="/"> GIFSong</a>
+        <a class="yui3-button fa fa-random"  href="/show"> random</a>
+    </div>
+{% endblock %}
 
-<a href="/show">view random song</a>
-    <h1>Gif Song</h1>
+{% block container %}
 <form action="/" method="post">
     {{ form.non_field_errors }}
     {% csrf_token %}
-
-
-
-
 <div id="wizard">
-                <h2>Image</h2>
+                <h2>GIF Url</h2>
                 <section>
                     <div class="fieldWrapper">
                         {{ form.image_url.errors }}
-                        <label for="id_subject">URL to Image</label>
                         {{ form.image_url }}
                     </div>
-                    <p>
-                        currently limited to imgur.com
-                    </p>
                 </section>
 
-                <h2>Song</h2>
+                <h2>Youtube Url</h2>
                 <section>
                     <div class="fieldWrapper">
                         {{ form.audio_url.errors }}
-                        <label for="id_message">URL to Audio</label>
                         {{ form.audio_url }}
                     </div>
-                    <p>
-                        add songs with urls like www.youtube.com/embed/zpmKjJ4YU_c?autoplay=1
-                    </p>
                 </section>
 
                 <h2>Create</h2>
                 <section>
-   <input id="submitgifvid" class="yui3-button success" type="submit" value="Create" />
+                    <input id="submitgifvid" class="yui3-button success" type="submit" value="Create" />
 
                 </section>
             </div>
 </form>
-
+<div id="previewSong"></div>
     <script>
+     // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var previewSong;
     $(function(){
-        $("#id_image_url").attr("placeholder","http://imgur.com/SVwaAwZ");
+        $("#id_image_url").attr("placeholder","http://i.imgur.com/WJBkMZ1.gif");
+        $("#id_audio_url").attr("placeholder","http://youtu.be/6M5SflJgsQ0");
+
+        $("#id_image_url").change(function(){
+             alert('error');
+            $("<img>", {
+                    src: $("#id_image_url").val(),
+                    error: function() { alert('error'); },
+                    load: function() { },
+            });
+         });
+
+        var imageError = false;
+
         $("#wizard").steps({
             headerTag: "h2",
             bodyTag: "section",
             transitionEffect: "slideLeft",
-            height:"300"
+            height:"200",
+            enableFinishButton: false,
+            onStepChanging: function (event, currentIndex, newIndex) {
+                if(currentIndex == 0){
+                    var previewFix = "http://";
+                    if ($("#id_image_url").val().indexOf("http://")==0 || $("#id_image_url").val().indexOf("https://")==0) {
+                        var val = $("#id_image_url").val().replace("http://","");
+                        val = val.replace("https://","");
+                        $("#id_image_url").val(val);
+                        console.log(val);
+                    }
+                    $("<img>", {
+                        src: previewFix + $("#id_image_url").val(),
+                        error: function() { $('li.first').addClass('error');  $("#submitgifvid").attr("disabled", "disabled");},
+                        load: function() {
+                                console.log('loafef');
+                                $('li.first').removeClass('error');
+                                $("html").css('background','url(' + previewFix + $("#id_image_url").val() +') no-repeat center center fixed');
+                                $("html").css('-webkit-background-size', 'cover');
+                                $("html").css('-moz-background-size', 'cover');
+                                $("html").css('-o-background-size', 'cover');
+                                $("html").css('background-size:', 'cover');
+                                $("#submitgifvid").removeAttr("disabled");
+                        },
+                    });
+                }
+
+                if(currentIndex == 1){
+
+                    var tubeid = getTubeId($("#id_audio_url").val());
+
+
+
+                    $("#previewSong").remove();
+                    $("body").append(
+                    $('<div></div>', {id:"previewSong"})
+
+                    );
+
+                     $("#previewSong").css('display', 'none');
+                      // 3. This function creates an <iframe> (and YouTube player)
+                      //    after the API code downloads.
+
+                        previewSong = new YT.Player('previewSong', {
+                          height: '200',
+                          width: '200',
+                          videoId: tubeid,
+                          playerVars: { 'autoplay': 1 },
+                          events: {
+                            'onReady': function(event){console.log('ready', event);
+                                    if (previewSong.getDuration() <= 0){
+                                        //error
+                                         $('ul li:eq(1)').addClass('error');
+                                         $("#submitgifvid").attr("disabled", "disabled");
+                                         $("#previewSong").remove();
+                                    } else{
+                                        $("#submitgifvid").removeAttr("disabled");
+                                        $("#previewSong").css('display', 'block');
+                                    }
+
+                        console.log(previewSong.getDuration());
+
+
+
+
+                                                      },
+                            'onStateChange': function(){},
+                            'onError': function(event){
+                                console.log('error', event)
+                             }
+                          }
+                        });
+
+
+
+                }
+
+
+                return true;
+            },
         });
 
-        $("#id_image_url").after(
-            $("<div/>", {
-                "id" : "checkImage",
-                "src" : $("#id_image_url").val(),
-                "class" : "yui3-button fa fa-eye notice marginTop",
-                "text" : " preview"
-            })
-        );
-        $("#checkImage").click(function(){
-
-            //check imgur stuffs
-            var image_url = $("#id_image_url").val();
-            if (!/^https?:\/\//i.test(image_url)) {
-                image_url = 'http://' + image_url;
-            }
-            if(image_url.indexOf("imgur") > -1 && /^https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:gif)$/.test(image_url) != true){
-                if(image_url.lastIndexOf("/") == (image_url.length - 1)){
-                    //remove trailing slash
-                    image_url = image_url.substring(0, (image_url.lastIndexOf("/")))
-                };
-                image_url = image_url.substring(image_url.lastIndexOf("/") + 1);
-                image_url = "i.imgur.com/" + image_url + ".gif";
-            }
-
-            //ensure it is an image
-            if(/^https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:gif)$/.test(image_url)){
-                //gif image is in string with proper url, strip for inserting into db
-                image_url = image_url.replace("http://","");
-                image_url = image_url.replace("https://","");
-            }
+        function getTubeId(url){
+                var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                var match = url.match(regExp);
+                if (match&&match[2].length==11){
+                    console.log(match[2]);
+                    return match[2];
+                }else{
+                    return false;
+                }
+        }
 
 
-            $("#previewImage").remove();
-            $("#id_image_url").before(
 
-                $("<img/>", {
-                    "id" : "previewImage",
-                    "class" : "previewImage",
-                    "src" : "http://" + image_url
-                })
-            );
-        });
-
-        $("#id_audio_url").after(
-            $("<div/>", {
-                "id" : "checkSong",
-                "src" : $("#id_image_url").val(),
-                "class" : "yui3-button fa fa-volume-up notice marginTop",
-                "text" : " preview"
-            })
-        );
-        $("#checkSong").click(function(){
-            $("#previewSong").remove();
-            $("#id_audio_url").before(
-                $("<iframe/>", {
-                    "id" : "previewSong",
-                    "class" : "previewImage",
-                    "frameborder": "0",
-                    "src" : "http://" + $("#id_audio_url").val()
-                })
-            );
-        });
 
 
     });
     </script>
+<style>
+    body{
+        margin:0;
+    }
+    #sharebar {
+    position: relative;
+    width: 100%;
+    height: 2.5em;
+    background-color: transparent;
+    padding-top: 5px;
+        text-align:left;
+    font-size: 0.8em;
+}
+
+
+#sharebar a {
+    color: #000;
+    font-weight: bold;
+}
+
+.wizard > .content {
+        background-color:transparent;
+    }
+
+.wizard > .steps > ul > li, .wizard > .actions > ul > li {
+float: left;
+opacity: .7;
+}
+    #id_audio_url::-webkit-input-placeholder, #id_image_url::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #333;
+}
+#id_image_url:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #333;
+}
+#id_image_url::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #333;
+}
+#id_image_url:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #333;
+}
+
+
+#previewSong{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+        display:block;
+}
+
+.wizard, .tabcontrol {
+    display: block;
+    width: 65%;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
 <div class="footer">
     <div class="copyright">Brought to you by these Doges.</div>
     <div class="doges clearfix">
