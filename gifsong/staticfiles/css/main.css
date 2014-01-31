@@ -35,9 +35,8 @@ input[type="text"] {
 
 #submitgifvid {
     font-size: 1.3em;
-    position: absolute;
-    bottom: 20%;
-    right: 20%;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .marginTop {
