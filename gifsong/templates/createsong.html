@@ -15,6 +15,7 @@
 {% endblock %}
 
 {% block container %}
+{% include "includes/github.html" %}
 <form action="/" method="post">
     {{ form.non_field_errors }}
     {% csrf_token %}

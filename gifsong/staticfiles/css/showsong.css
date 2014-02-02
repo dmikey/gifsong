@@ -7,11 +7,11 @@ html{
 #sharebar {
     position: absolute;
     width: 100%;
-    height: 2em;
+    height: 2.2em;
     background-color: #000;
     opacity: .5;
     padding-top: 5px;
-    bottom: 0;
+    top: 0;
     font-size: 0.8em;
 }
 

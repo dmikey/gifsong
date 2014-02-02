@@ -73,10 +73,10 @@ function onYouTubeIframeAPIReady() {
 }
 
 $(function () {
-    var i = setTimeout('$("#sharebar").removeClass();$("#sharebar").addClass("animated fadeOutDown");$("#githubLink").removeClass();$("#githubLink").addClass("animated fadeOutUp");', 2000);
+    var i = setTimeout('$("#sharebar").removeClass();$("#sharebar").addClass("animated fadeOutUp");$("#githubLink").removeClass();', 2000);
 
     $("#permaLink").click(function (e) {
-        var inout = "fade" + (($(this).attr("data-show").indexOf("Hide") > -1) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1) ? "Down" : "Up");
+        var inout = "fade" + (($(this).attr("data-show").indexOf("Hide") > -1) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1) ? "Up" : "Down");
         $('#permaLinkText').removeClass();
         $("#permaLinkText").addClass('animated ' + inout);
         if (inout.indexOf("Out") > -1) {
@@ -102,7 +102,7 @@ $(function () {
         $("#githubLink").removeClass();
         $("#rating").removeClass();
 
-        var inout = "fade" + (($(this).text().indexOf("Hide") > -1) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1) ? "Down" : "Up");
+        var inout = "fade" + (($(this).text().indexOf("Hide") > -1) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1) ? "Up" : "Down");
         var inoutOther = "fade" + (($(this).text().indexOf("Hide") > -1) ? "Out" : "In") + (($(this).text().indexOf("Hide") > -1) ? "Up" : "Down");
         i = setTimeout('$("#sharebar").removeClass();$("#sharebar").addClass("animated ' + inout + '");$("#githubLink").removeClass();$("#githubLink").addClass("animated ' + inoutOther + '");', 2000);
     });
